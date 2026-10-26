@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sana – Hudson County Care Companion</title>
+<style>
+:root{--bg1:#f3f9e3;--bg2:#e4f1c0;--card:rgba(255,255,255,.78);--ink:#1f2d17;--mute:#51633f;--lime:#9bc53d;--deep:#2f5d1a;--line:rgba(47,93,26,.16);--alert:#c2410c;--alertbg:#ffe9dc;--fs:18px;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#18240f;--bg2:#22341a;--card:rgba(36,52,28,.82);--ink:#eef6dd;--mute:#b3c796;--line:rgba(190,230,120,.2);--alertbg:#4a2412;--alert:#ffb48a;--deep:#b9e36b}}
+:root[data-theme="dark"]{--bg1:#18240f;--bg2:#22341a;--card:rgba(36,52,28,.82);--ink:#eef6dd;--mute:#b3c796;--line:rgba(190,230,120,.2);--alertbg:#4a2412;--alert:#ffb48a;--deep:#b9e36b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font:var(--fs)/1.5 "Inter","Segoe UI",system-ui,-apple-system,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(50px);opacity:.3;z-index:0;background:var(--lime);animation:drift 18s ease-in-out infinite alternate}
+.b1{width:300px;height:300px;top:-80px;right:-60px}.b2{width:240px;height:240px;bottom:60px;left:-80px;animation-delay:-6s;background:#cfe98a}
+@keyframes drift{to{transform:translate(40px,50px) scale(1.15)}}
+.app{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:16px 16px 110px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.logo{font-weight:800;font-size:1.5em;color:var(--deep);letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.tools button{font:inherit;font-size:.8em;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:20px;padding:6px 12px;margin-left:6px;cursor:pointer}
+h2{margin:6px 0 10px;font-size:1.3em;color:var(--deep)}
+h3{margin:0 0 4px;font-size:1em}
+.card{background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.hero{background:linear-gradient(135deg,var(--deep),#4d8a22);color:#fff;border-radius:16px;padding:22px;margin-bottom:14px;position:relative;overflow:hidden}
+.hero .word{font-size:2.6em;font-weight:800;line-height:1.1;min-height:1.2em;animation:pop .6s}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}}
+.hero p{margin:6px 0 0;opacity:.92;font-size:.9em}
+.pulse{position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;border:3px solid rgba(255,255,255,.35);animation:ring 3s infinite}
+@keyframes ring{from{transform:scale(.6);opacity:1}to{transform:scale(1.5);opacity:0}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{font:inherit;color:var(--ink);text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:transform .15s}
+.tile:active{transform:scale(.96)}.tile span{font-size:1.7em;display:block}
+.btn{font:inherit;font-weight:700;background:var(--deep);color:#fff;border:0;border-radius:10px;padding:12px 18px;cursor:pointer;min-height:48px}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{}
+.btn.alt{background:transparent;color:var(--deep);border:2px solid var(--deep)}
+.btn.sos{background:var(--alert);color:#fff}
+@media(prefers-color-scheme:dark){.btn{color:#18240f}.btn.sos{color:#18240f}}
+input,select{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 12px;width:100%;min-height:48px}
+input:focus,button:focus-visible,select:focus{outline:3px solid var(--lime);outline-offset:2px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-block;background:var(--lime);color:#1f2d17;border-radius:12px;padding:2px 10px;font-size:.75em;font-weight:700}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;gap:2px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:var(--card);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.nav button{flex:1;max-width:110px;font:inherit;font-size:.62em;background:none;border:0;color:var(--mute);padding:6px 2px;border-radius:14px;cursor:pointer}
+.nav button span{display:block;font-size:2em}
+.nav button.on{background:var(--lime);color:#1f2d17;font-weight:800}
+.view{display:none}.view.on{display:block;animation:pop .35s}
+.alertbox{background:var(--alertbg);color:var(--alert);border:2px solid var(--alert);border-radius:18px;padding:12px;margin-bottom:12px;font-weight:700}
+.chat{max-height:46vh;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px}
+.msg{padding:10px 14px;border-radius:18px;max-width:88%;animation:pop .3s}
+.msg.bot{background:var(--card);border:1px solid var(--line);align-self:flex-start}
+.msg.me{background:var(--deep);color:#fff;align-self:flex-end}
+@media(prefers-color-scheme:dark){.msg.me{color:#18240f}}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.chips button{font:inherit;font-size:.78em;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:18px;padding:6px 12px;cursor:pointer}
+.price{display:flex;justify-content:space-between;font-size:.9em;padding:3px 0;border-bottom:1px dashed var(--line)}
+.best{color:var(--deep);font-weight:800}
+.small{font-size:.78em;color:var(--mute)}
+a{color:var(--deep);font-weight:700}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:12px 20px;border-radius:20px;z-index:9;display:none;max-width:90%;text-align:center}
+@media(prefers-color-scheme:dark){.toast{color:#18240f}}
+.nav button span,.tile span{display:none}
+.nav button{font-size:.78em;font-weight:600}
+.tile{min-height:84px}
+@media(min-width:900px){
+.nav{top:0;bottom:auto;right:auto;width:220px;flex-direction:column;justify-content:flex-start;gap:4px;padding:90px 14px;border-top:0;border-right:1px solid var(--line)}
+.nav button{max-width:none;flex:0 0 auto;text-align:left;font-size:1em;padding:12px 16px;border-radius:10px}
+.app{max-width:1100px;margin:0 auto;padding:28px 40px 40px 260px}
+#v-home.on{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:start}
+#v-home .hero{grid-column:1/-1;margin:0}
+#rx-list,#near-l,#needs-l{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#rx-list .card,#near-l .card,#needs-l .card{margin:0}
+.toast{bottom:30px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div>
+<div class="app">
+<header class="top">
+ <div class="logo">Sana</div>
+ <div class="tools"><button id="lang" aria-label="Change language">ES</button><button id="big" aria-label="Larger text">A+</button></div>
+</header>
+
+<section class="view on" id="v-home">
+ <div class="hero"><div class="pulse"></div>
+  <div class="word" id="word">Sana</div>
+  <p id="meaning">Spanish: healthy</p>
+  <p data-t="tag">Your Hudson County care companion.</p>
+ </div>
+ <div class="card" id="passport">
+  <div class="row" style="justify-content:space-between"><h3 data-t="pp">Care Passport</h3><span class="pill">Emergency</span></div>
+  <p class="small" data-t="ppd">One screen a paramedic or ER nurse can read in seconds. Fill it in once.</p>
+  <div class="row"><input id="pp-name" placeholder="Name" aria-label="Name"><input id="pp-allergy" placeholder="Allergies" aria-label="Allergies"></div>
+  <div class="row" style="margin-top:8px"><input id="pp-contact" placeholder="Emergency contact phone" aria-label="Emergency contact phone" inputmode="tel"></div>
+  <p class="small" id="pp-meds" style="margin-top:8px"></p>
+  <div class="row" style="margin-top:8px"><button class="btn sos" id="show-pp">Show to responder</button><a class="btn alt" style="text-decoration:none;display:inline-flex;align-items:center" href="tel:911">Call 911</a></div>
+ </div>
+ <div class="grid">
+  <button class="tile" data-go="meds"><span>💊</span><b data-t="n-meds">Pill reminders</b></button>
+  <button class="tile" data-go="rx"><span>💲</span><b data-t="n-rx">Rx prices</b></button>
+  <button class="tile" data-go="chat"><span>💬</span><b data-t="n-chat">Ask Sana</b></button>
+  <button class="tile" data-go="near"><span>🏥</span><b data-t="n-near">Care near me</b></button>
+  <button class="tile" data-go="needs" style="grid-column:span 2"><span>🍎</span><b data-t="n-needs">Food, shelter &amp; more</b></button>
+ </div>
+</section>
+
+<section class="view" id="v-meds">
+ <h2 data-t="n-meds">Pill reminders</h2>
+ <div id="due"></div>
+ <div class="card">
+  <div class="row"><input id="m-name" placeholder="Medicine (e.g. Lisinopril 10 mg)" aria-label="Medicine name"></div>
+  <div class="row" style="margin-top:8px"><input id="m-time" type="time" value="08:00" aria-label="Time"><input id="m-cg" placeholder="Caregiver phone (optional)" inputmode="tel" aria-label="Caregiver phone"></div>
+  <button class="btn" id="m-add" style="margin-top:10px">Add reminder</button>
+ </div>
+ <div id="m-list"></div>
+ <p class="small">Reminders sound while this page is open. If a dose is missed for 30 minutes, Sana shows a one-tap text to your caregiver.</p>
+</section>
+
+<section class="view" id="v-rx">
+ <h2 data-t="n-rx">Rx price tracker</h2>
+ <input id="rx-q" placeholder="Search a medicine" aria-label="Search a medicine">
+ <p class="small">Sample prices for the demo. A live version would pull from pharmacy discount feeds.</p>
+ <div id="rx-list"></div>
+</section>
+
+<section class="view" id="v-chat">
+ <h2 data-t="n-chat">Ask Sana</h2>
+ <div id="sos" class="alertbox" style="display:none">This may be an emergency. Call 911 now. <a href="tel:911">Call 911</a></div>
+ <div class="card"><div class="chat" id="chat"></div>
+ <div class="chips" id="chips"></div>
+ <div class="row"><input id="chat-in" placeholder="Describe a symptom or ask a question" aria-label="Message"><button class="btn" id="send">Send</button></div></div>
+ <p class="small">Sana gives general information, not a diagnosis. Mental health crisis: call or text 988.</p>
+</section>
+
+<section class="view" id="v-near">
+ <h2 data-t="n-near">Care near me</h2>
+ <div class="chips" id="near-f"></div>
+ <div id="near-l"></div>
+ <p class="small">Sample list for the demo. Always confirm hours and cost by phone or at 211.</p>
+</section>
+
+<section class="view" id="v-needs">
+ <h2 data-t="n-needs">Food, shelter &amp; more</h2>
+ <div class="card"><h3>Not sure where to start?</h3><p style="margin:4px 0 10px">Dial 211 for free help with food, housing, utilities and rides, in many languages.</p><a class="btn" style="text-decoration:none;display:inline-block" href="tel:211">Call 211</a></div>
+ <div id="needs-l"></div>
+</section>
+</div>
+
+<nav class="nav" aria-label="Main">
+ <button data-go="home" class="on"><span>🏠</span><i data-t="n-home" style="font-style:normal">Home</i></button>
+ <button data-go="meds"><span>💊</span><i data-t="n-meds2" style="font-style:normal">Pills</i></button>
+ <button data-go="rx"><span>💲</span><i data-t="n-rx2" style="font-style:normal">Rx</i></button>
+ <button data-go="chat"><span>💬</span><i data-t="n-chat2" style="font-style:normal">Ask</i></button>
+ <button data-go="near"><span>🏥</span><i data-t="n-near2" style="font-style:normal">Clinics</i></button>
+ <button data-go="needs"><span>🍎</span><i data-t="n-needs2" style="font-style:normal">Needs</i></button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const T={en:{tag:"Your Hudson County care companion.",pp:"Care Passport",ppd:"One screen a paramedic or ER nurse can read in seconds. Fill it in once.","n-meds":"Pill reminders","n-rx":"Rx prices","n-chat":"Ask Sana","n-near":"Care near me","n-needs":"Food, shelter & more","n-home":"Home","n-meds2":"Pills","n-rx2":"Rx","n-chat2":"Ask","n-near2":"Clinics","n-needs2":"Needs"},
+es:{tag:"Tu compañera de salud en el condado de Hudson.",pp:"Pasaporte de cuidado",ppd:"Una pantalla que un paramédico puede leer en segundos. Llénala una vez.","n-meds":"Recordatorio de pastillas","n-rx":"Precios de recetas","n-chat":"Pregúntale a Sana","n-near":"Clínicas cercanas","n-needs":"Comida, refugio y más","n-home":"Inicio","n-meds2":"Pastillas","n-rx2":"Recetas","n-chat2":"Preguntar","n-near2":"Clínicas","n-needs2":"Ayuda"}};
+let lang="en";
+function applyLang(){$$("[data-t]").forEach(e=>{const v=T[lang][e.dataset.t];if(v)e.textContent=v});$("#lang").textContent=lang==="en"?"ES":"EN";document.documentElement.lang=lang}
+$("#lang").onclick=()=>{lang=lang==="en"?"es":"en";applyLang()};
+let big=false;$("#big").onclick=()=>{big=!big;document.documentElement.style.setProperty("--fs",big?"22px":"18px")};
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",3200)}
+
+// Meaning rotator: Sana in different languages
+const words=[["Sana","Spanish & Italian: healthy"],["سنا","Arabic (sanā): radiance, light"],["Sanar","Latin root sanare: to heal"],["सना","Hindi/Urdu name: praise, glory"]];
+let wi=0;setInterval(()=>{wi=(wi+1)%words.length;const w=$("#word");w.style.animation="none";void w.offsetWidth;w.style.animation="";w.textContent=words[wi][0];$("#meaning").textContent=words[wi][1]},3500);
+
+// Navigation
+function go(v){$$(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+v));$$(".nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===v));window.scrollTo({top:0,behavior:"smooth"})}
+$$("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));
+
+// Storage helpers
+const st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+// Care Passport
+["name","allergy","contact"].forEach(k=>{const el=$("#pp-"+k);el.value=st.get("pp-"+k,"");el.oninput=()=>st.set("pp-"+k,el.value)});
+let meds=st.get("meds",[]);
+function ppMeds(){$("#pp-meds").textContent=meds.length?"Medicines: "+meds.map(m=>m.name).join(", "):"Medicines from your reminders appear here."}
+$("#show-pp").onclick=()=>{const w=window.open("","_blank");if(!w){toast("Allow pop-ups to show full screen");return}
+ w.document.write(`<body style="font:28px system-ui;padding:20px;background:#fff;color:#000"><h1 style="color:#b91c1c">EMERGENCY INFO</h1><p><b>Name:</b> ${esc($("#pp-name").value)}</p><p><b>Allergies:</b> ${esc($("#pp-allergy").value)||"none listed"}</p><p><b>Medicines:</b> ${esc(meds.map(m=>m.name).join(", "))||"none listed"}</p><p><b>Call:</b> ${esc($("#pp-contact").value)}</p>`)};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+// Pill reminders
+const today=()=>new Date().toDateString();
+function beep(){try{const c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=660;g.gain.setValueAtTime(.2,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+1);o.start();o.stop(c.currentTime+1)}catch(e){}}
+function renderMeds(){
+ $("#m-list").innerHTML=meds.length?meds.map((m,i)=>`<div class="card row" style="justify-content:space-between"><div><h3>${esc(m.name)}</h3><span class="small">${m.time}${m.last===today()?" · taken today ✓":""}</span></div><div class="row"><button class="btn alt" data-take="${i}">Taken</button><button class="btn alt" data-del="${i}" aria-label="Delete">✕</button></div></div>`).join(""):`<div class="card small">No reminders yet. Add your first medicine above.</div>`;
+ $$("[data-take]").forEach(b=>b.onclick=()=>{meds[b.dataset.take].last=today();st.set("meds",meds);renderMeds();checkDue();toast("Great job. Dose logged.")});
+ $$("[data-del]").forEach(b=>b.onclick=()=>{meds.splice(b.dataset.del,1);st.set("meds",meds);renderMeds();checkDue()});
+ ppMeds();}
+$("#m-add").onclick=()=>{const n=$("#m-name").value.trim();if(!n){toast("Type the medicine name first");return}
+ meds.push({name:n,time:$("#m-time").value,cg:$("#m-cg").value.trim()});st.set("meds",meds);$("#m-name").value="";renderMeds();toast("Reminder added")};
+let beeped={};
+function checkDue(){const now=new Date(),mins=now.getHours()*60+now.getMinutes();let html="";
+ meds.forEach((m,i)=>{if(m.last===today())return;const[h,mm]=m.time.split(":").map(Number),diff=mins-(h*60+mm);
+  if(diff>=0&&diff<30){html+=`<div class="alertbox">Time for ${esc(m.name)}</div>`;if(!beeped[i+m.time]){beeped[i+m.time]=1;beep()}}
+  else if(diff>=30&&diff<600){html+=`<div class="alertbox">Missed: ${esc(m.name)} (${m.time}). ${m.cg?`<a href="sms:${esc(m.cg)}?body=${encodeURIComponent("Sana reminder: I haven’t logged my "+m.name+" yet.")}">Text my caregiver</a>`:"Add a caregiver phone to notify family."}</div>`}});
+ $("#due").innerHTML=html}
+renderMeds();checkDue();setInterval(checkDue,30000);
+
+// Rx prices (sample data)
+const rx=[["Lisinopril 10 mg (30)",[["Walmart",4],["Costco",5.2],["CVS",14.8],["Walgreens",12.5]]],["Metformin 500 mg (60)",[["Walmart",4],["Costco",6.1],["CVS",13.4],["Walgreens",11.9]]],["Atorvastatin 20 mg (30)",[["Costco",7.8],["Walmart",9],["CVS",21.3],["Walgreens",19.5]]],["Amlodipine 5 mg (30)",[["Walmart",4],["Costco",5.5],["CVS",12.2],["Walgreens",10.7]]],["Levothyroxine 50 mcg (30)",[["Costco",8.9],["Walmart",10],["CVS",17.4],["Walgreens",15.6]]],["Omeprazole 20 mg (30)",[["Costco",6.3],["Walmart",9.5],["CVS",16.8],["Walgreens",14.2]]]];
+let watch=st.get("watch",[]);
+function renderRx(){const q=$("#rx-q").value.toLowerCase();
+ $("#rx-list").innerHTML=rx.filter(r=>r[0].toLowerCase().includes(q)).map(r=>{const best=Math.min(...r[1].map(p=>p[1])),worst=Math.max(...r[1].map(p=>p[1])),w=watch.includes(r[0]);
+ return `<div class="card"><div class="row" style="justify-content:space-between"><h3>${r[0]}</h3><button class="btn alt" data-w="${r[0]}" style="min-height:40px;padding:4px 12px">${w?"★ Tracking":"☆ Track"}</button></div>${r[1].sort((a,b)=>a[1]-b[1]).map(p=>`<div class="price ${p[1]===best?"best":""}"><span>${p[0]}</span><span>$${p[1].toFixed(2)}</span></div>`).join("")}<p class="small" style="margin:6px 0 0">Save up to $${(worst-best).toFixed(2)} per fill at the lowest price. Ask your pharmacist about generics.</p></div>`}).join("")||`<div class="card small">No match. Try another name.</div>`;
+ $$("[data-w]").forEach(b=>b.onclick=()=>{const n=b.dataset.w;watch=watch.includes(n)?watch.filter(x=>x!==n):[...watch,n];st.set("watch",watch);renderRx();toast(watch.includes(n)?"Tracking. We’ll flag price drops.":"Stopped tracking")})}
+$("#rx-q").oninput=renderRx;renderRx();
+
+// Chat + symptom checker (rule-based demo)
+const red=/chest pain|can.?t breathe|trouble breathing|shortness of breath|stroke|face droop|slurred|unconscious|seizure|severe bleeding|overdose|suicid|faint/i;
+const KB=[[/headache|migraine/,"Most headaches ease with rest, water and an over-the-counter pain reliever if your doctor says it’s safe for you. See a clinician soon if it is the worst of your life, follows a fall, or comes with confusion, vision changes or a stiff neck."],
+[/fever|temperature/,"Rest and drink fluids. Call your doctor if a fever is above 103°F, lasts more than 3 days, or comes with a stiff neck, confusion or trouble breathing. Adults over 65 should call sooner."],
+[/cough|cold|sore throat|flu/,"Rest, fluids and warm drinks help most colds. Call a doctor if you have trouble breathing, symptoms beyond 10 days, or a high fever. Ask your pharmacist about this year’s flu, COVID and RSV vaccines."],
+[/stomach|nausea|vomit|diarrhea/,"Sip fluids often and eat bland foods. Call a doctor if you cannot keep liquids down for a day, see blood, or feel very dizzy. Dehydration is riskier for older adults."],
+[/dizzy|dizziness|lighthead/,"Sit down and drink water. Stand up slowly. Dizziness can come from medicines, blood pressure or dehydration, so tell your doctor or pharmacist, especially if you fell."],
+[/rash|itch|skin/,"Keep the area clean and avoid new soaps. Get care quickly if the rash spreads fast, blisters, hurts a lot, or comes with fever or swelling of the face."],
+[/blood pressure|hypertension/,"A normal reading is under 120/80. Check at the same time each day, sitting and rested. Take medicine as prescribed, limit salt, and call your doctor if readings stay at 140/90 or higher."],
+[/diabet|sugar|glucose/,"Keep regular meals, take medicines as prescribed and check your sugar as advised. Call your doctor for repeated highs or lows, or excess thirst and tiredness."],
+[/medicare|insurance|afford|cost/,"If cost is a worry, ask your pharmacist about generics, check the Rx tab for the lowest price, and call 211 or your county senior services office about help with insurance and benefits."],
+[/lonely|sad|depress|anxious|anxiety/,"I’m sorry you’re feeling this way. Talking helps. You can call or text 988 any time, and your doctor can connect you with counseling."]];
+function addMsg(t,w){const d=document.createElement("div");d.className="msg "+w;d.textContent=t;$("#chat").appendChild(d);$("#chat").scrollTop=1e5}
+function ask(q){addMsg(q,"me");$("#sos").style.display=red.test(q)?"block":"none";
+ setTimeout(()=>{if(red.test(q)){addMsg("Please call 911 right now. Do not wait or drive yourself. If you can, unlock the door and sit down.","bot");return}
+  const hit=KB.find(k=>k[0].test(q.toLowerCase()));addMsg(hit?hit[1]:"I can help with symptoms like headache, fever, cough, stomach upset or dizziness, and questions about blood pressure, diabetes or costs. For anything else, call your doctor or 211.","bot")},500)}
+addMsg("Hello, I’m Sana. Tell me what you’re feeling or ask a health question.","bot");
+["Headache","Fever","Dizzy","Blood pressure","Chest pain"].forEach(c=>{const b=document.createElement("button");b.textContent=c;b.onclick=()=>ask(c);$("#chips").appendChild(b)});
+$("#send").onclick=()=>{const v=$("#chat-in").value.trim();if(v){$("#chat-in").value="";ask(v)}};
+$("#chat-in").onkeydown=e=>{if(e.key==="Enter")$("#send").click()};
+
+// Clinics (sample) and needs
+const clinics=[["Jersey City Medical Center","Hospital","Jersey City"],["Hoboken University Medical Center","Hospital","Hoboken"],["Bayonne Medical Center","Hospital","Bayonne"],["Metropolitan Family Health Network","Sliding-scale clinic","Jersey City"],["Hudson Regional Hospital","Hospital","Secaucus"],["Urgent care and pharmacy","Walk-in","Search nearby"]];
+let cf="All";const types=["All","Hospital","Sliding-scale clinic","Walk-in"];
+function renderNear(){$("#near-f").innerHTML="";types.forEach(t=>{const b=document.createElement("button");b.textContent=t;b.style.fontWeight=t===cf?800:400;b.onclick=()=>{cf=t;renderNear()};$("#near-f").appendChild(b)});
+ $("#near-l").innerHTML=clinics.filter(c=>cf==="All"||c[1]===cf).map(c=>`<div class="card row" style="justify-content:space-between"><div><h3>${c[0]}</h3><span class="small">${c[1]} · ${c[2]}</span></div><a href="https://www.google.com/maps/search/${encodeURIComponent(c[0]+" "+c[2]+" NJ")}" target="_blank" rel="noopener">Directions</a></div>`).join("")}
+renderNear();
+const needs=[["🍽️","Food pantries & meals","Free groceries and hot meals. 211 can match you to the closest pantry, and many deliver to homebound seniors."],["🏠","Shelter & housing help","Emergency shelter, rent help and eviction support through county services. Call 211 any time."],["💡","Utility help","Assistance with heating and electric bills, including NJ energy assistance programs."],["🚐","Rides to appointments","Senior and Medicaid transportation to medical visits. Ask your insurer or county office."],["🧓","Senior services","Home-delivered meals, aides and caregiver support through your county Area Agency on Aging."]];
+$("#needs-l").innerHTML=needs.map(n=>`<div class="card"><h3>${n[1]}</h3><p class="small" style="margin:4px 0 0">${n[2]}</p></div>`).join("");
+applyLang();
+</script>
+</body>
+</html>
